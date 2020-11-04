@@ -81,6 +81,24 @@ chaff_summary <- chaff2 %>%
 chaff_summary
 ```
 
+#Create a function that summarises
+
+```{r packages}
+
+standard_error <- function(x) sd(x) / sqrt(length(x))
+
+data_summary <- function(df, measure, group) {
+  df %>% group_by({{ group }}) %>% 
+    summarise(ss = sum(({{measure}} - mean({{measure}}))^2), 
+            mean = mean({{measure}}),
+            n= length({{measure}}),
+            standard_deviation = sd({{measure}}),
+            standard_error= sd({{measure}}) / sqrt(length({{measure}})))
+}
+
+data_summary(chaff2, mass, sex)
+```
+
 ## Results
 
 
